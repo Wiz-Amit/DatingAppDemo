@@ -1,0 +1,5 @@
+1. (28.01.19) Browser doesn't trust ssl certificate {
+    Solution:
+        i. run: dotnet dev-certs https --trust
+        ii. restart vs code
+}
