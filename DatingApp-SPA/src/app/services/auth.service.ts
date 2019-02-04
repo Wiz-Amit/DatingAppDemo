@@ -10,8 +10,7 @@ import { environment } from 'src/environments/environment';
 
 export class AuthService {
   private baseUrl = environment.apiUrl +  "auth/";
-  private jwtHelper = new JwtHelperService;  
-  private decodedToken: any;
+  private jwtHelper = new JwtHelperService;
 
   constructor(private http: HttpClient) { }
 
@@ -29,12 +28,19 @@ export class AuthService {
 
   loggedIn() {
     const token = localStorage.getItem("token");
-    this.decodedToken = this.jwtHelper.decodeToken(token);
+    this.decodedToken();
     return !!token;
   }
 
+  decodedToken() {
+    return this.jwtHelper.decodeToken(localStorage.getItem("token"));
+  }
+
   getUsername() {
-    this.loggedIn();
-    return this.decodedToken.unique_name || "";
+    return this.decodedToken().unique_name || "";
+  }
+
+  getId() {
+    return this.decodedToken().nameid;
   }
 }
