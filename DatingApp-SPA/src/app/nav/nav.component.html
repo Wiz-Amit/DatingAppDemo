@@ -25,11 +25,14 @@
     </form>
 
     <ng-template #welcome>
+      <span class="mr-2">
+        <img class="user-image" [src]="getCurrentUser().photoUrl">
+      </span>
       <div dropdown class="dropdown">
         <a dropdownToggle (click)="false"
           class="dropdown-toggle text-light"
           style="cursor: pointer;"
-          >Welcome {{getUsername() | titlecase}}
+          >Welcome {{getCurrentUser().knownAs | titlecase}}
         </a>
         
         <div *dropdownMenu class="dropdown-menu">

@@ -12,7 +12,8 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="card">
-        <img src="{{user.photoUrl}}" alt="{{user.knowAs}}" class="card-img-top img-thumbnail">
+        <img [src]="getMainPhoto()" [alt]="user.knowAs"
+          class="card-img-top img-thumbnail">
         <div class="card-body">
           <div>
             <strong>Location:</strong>
@@ -32,8 +33,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <button [disabled]="!editForm.dirty" form="editForm"
-            class="btn btn-success btn-block">Save Changes</button>
+          <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save Changes</button>
         </div>
       </div>
     </div>
@@ -41,34 +41,28 @@
       <div class="tab-panel">
         <tabset class="member-tabset">
           <tab heading="Edit Profile">
-            <form id="editForm" #editForm="ngForm"
-              (ngSubmit)="updateUser(editForm)">
+            <form id="editForm" #editForm="ngForm" (ngSubmit)="updateUser(editForm)">
               <h4>Description</h4>
-              <textarea name="introduction" rows="6"
-                class="form-control" [(ngModel)]="user.introduction">
+              <textarea name="introduction" rows="6" class="form-control" [(ngModel)]="user.introduction">
               </textarea>
               <h4>Looking For</h4>
-              <textarea name="lookingFor" rows="6"
-                class="form-control" [(ngModel)]="user.lookingFor">
+              <textarea name="lookingFor" rows="6" class="form-control" [(ngModel)]="user.lookingFor">
               </textarea>
               <h4>Interests</h4>
-              <textarea name="interests" rows="6"
-                class="form-control" [(ngModel)]="user.interests">
+              <textarea name="interests" rows="6" class="form-control" [(ngModel)]="user.interests">
               </textarea>
               <h4>Location Details:</h4>
               <div class="form-inline">
                 <label for="city">City</label>
-                <input class="form-control"  type="text"
-                  name="city" [(ngModel)]="user.city">
+                <input class="form-control" type="text" name="city" [(ngModel)]="user.city">
                 <label for="country">Country</label>
-                <input class="form-control"  type="text"
-                  name="country" [(ngModel)]="user.country">
+                <input class="form-control" type="text" name="country" [(ngModel)]="user.country">
               </div>
             </form>
           </tab>
           <tab heading="Photos">
             <h4>Photos</h4>
-            Todo: Photo edit section goes here
+            <app-photo-editor [photos]="user.photos"></app-photo-editor>
           </tab>
         </tabset>
       </div>

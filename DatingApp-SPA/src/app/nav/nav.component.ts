@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AlertifyService } from '../services/alertify.service';
 import { Router } from '@angular/router';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-nav',
@@ -9,8 +10,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  user: string = "";
-
   constructor(
     private authService: AuthService,
     private alertify: AlertifyService,
@@ -37,12 +36,13 @@ export class NavComponent implements OnInit {
     return this.authService.loggedIn();
   }
 
-  getUsername() {
-    return this.authService.getUsername();
+  getCurrentUser() {
+    return this.authService.getCurrentUser();
   }
 
   logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     this.alertify.message("Successfully logged out");
     this.router.navigate(["/home"]);
   }

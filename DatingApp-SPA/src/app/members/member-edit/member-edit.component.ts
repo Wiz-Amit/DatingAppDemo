@@ -52,4 +52,9 @@ export class MemberEditComponent implements OnInit {
         })
   }
 
+  getMainPhoto() {
+    this.user.photoUrl = this.authService.getCurrentUser().photoUrl;
+    return this.user.photoUrl;
+  }
+
 }

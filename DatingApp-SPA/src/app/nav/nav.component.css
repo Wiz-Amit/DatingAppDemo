@@ -1,3 +1,10 @@
 .nav-link:focus {
     outline: 1px dotted whitesmoke;
 }
+
+.user-image {
+    max-height: 50px;
+    border: 2px solid white;
+    display: inline;
+    border-radius: 50%;
+}
