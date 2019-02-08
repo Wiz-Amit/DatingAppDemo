@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="card">
-        <img [src]="getMainPhoto()" [alt]="user.knowAs"
+        <img [src]="getMainPhoto() || '../../../assets/user.png'" [alt]="user.knowAs"
           class="card-img-top img-thumbnail">
         <div class="card-body">
           <div>
