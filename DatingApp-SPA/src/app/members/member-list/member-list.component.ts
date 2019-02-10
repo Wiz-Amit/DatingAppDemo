@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { AlertifyService } from '../../services/alertify.service';
 import { User } from '../../models/user';
+import { Pagination } from 'src/app/models/pagination';
 
 @Component({
   selector: 'app-member-list',
@@ -10,20 +11,40 @@ import { User } from '../../models/user';
 })
 export class MemberListComponent implements OnInit {
   users: User[];
+  pagination: Pagination;
+  pageNumber = 1;
+  pageSize = 5;
+  user: User = JSON.parse(localStorage.getItem("user"));
+  genderList = [{display: "Male", value: "male"}, {display: "Female", value: "female"}]
+  userParams: any = {};
 
   constructor(private userService: UserService, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.loadUsers();
+    this.resetFilters();
   }
 
   loadUsers() {
-    this.userService.getUsers().subscribe(users => {
-      this.users = users;
+    this.userService.getUsers(this.pageNumber, this.pageSize, this.userParams).subscribe(res => {
+      this.users = res.result;
+      this.pagination = res.pagination;
     },
     error => {
       this.alertify.error(error);
     });
   }
 
+  pageChanged(event: any) {
+    this.pageNumber = event.page;
+    this.loadUsers();
+  }
+
+  resetFilters() {
+    this.userParams.gender = this.user.gender == "male" ? "female" : "male";
+    this.userParams.minAge = 18;
+    this.userParams.maxAge = 99;
+    this.userParams.orderBy = "lastActive";
+
+    this.loadUsers();
+  }
 }

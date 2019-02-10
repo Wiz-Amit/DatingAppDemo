@@ -27,6 +27,11 @@ export class AuthService {
       );
   }
 
+  logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
+
   register(user: User) {
     return this.http.post(this.baseUrl + "register", user);
   }

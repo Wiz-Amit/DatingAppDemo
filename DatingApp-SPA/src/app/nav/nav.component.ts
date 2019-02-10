@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AlertifyService } from '../services/alertify.service';
 import { Router } from '@angular/router';
-import { User } from '../models/user';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +12,13 @@ export class NavComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private alertify: AlertifyService,
-    private router: Router) { }
+    private router: Router) {
+      //forwards the user to home when logged out
+      window.addEventListener("storage", () => {
+        if(localStorage.getItem("token") == null)
+          this.router.navigate(["/home"]);
+      });
+    }
 
   ngOnInit() {
   }
@@ -41,8 +46,8 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    this.authService.logout();
+    
     this.alertify.message("Successfully logged out");
     this.router.navigate(["/home"]);
   }
