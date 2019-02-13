@@ -34,10 +34,8 @@ export class MemberListComponent implements OnInit {
     });
   }
 
-  pageChanged(event: any) {
-    this.pageNumber = event.page;
-    this.loadUsers();
-  }
+  
+  
 
   resetFilters() {
     this.userParams.gender = this.user.gender == "male" ? "female" : "male";

@@ -1,57 +1,51 @@
-<div class="container mt-4" *ngIf="user">
-  <div class="row ml-2">
-    <h1>{{user.knownAs}}</h1>
-  </div>
+<div class="container mt-4">
   <div class="row">
     <div class="col-sm-4">
-      <div class="card">
-        <img src="{{user.photoUrl || '../../../assets/user.png'}}" alt="{{user.knowAs}}" class="card-img-top img-thumbnail">
+      <div class="card" *ngIf="user">
+        <img src="{{user.photoUrl || '../../../assets/user.png'}}" alt="{{user?.knowAs}}" class="card-img-top img-thumbnail">
         <div class="card-body">
+            <h4>{{user?.knownAs}}</h4>
           <div>
-            <strong>Location:</strong>
-            <p>{{user.city}}</p>
+            <strong>Location:</strong> {{user.city}}
           </div>
           <div>
-            <strong>Age:</strong>
-            <p>{{user.age}}</p>
+            <strong>Age:</strong> {{user.age}}
           </div>
           <div>
-            <strong>Last Active:</strong>
-            <p>{{user.lastActive | timeAgo}}</p>
+            <strong>Last Active:</strong> {{user.lastActive | timeAgo}}
           </div>
           <div>
-            <strong>Member Since:</strong>
-            <p>{{user.created | date}}</p>
+            <strong>Member Since:</strong> {{user.created | date}}
           </div>
         </div>
         <div class="card-footer">
           <div class="btn-group d-flex">
             <button class="btn btn-primary w-100">Like</button>
-            <button class="btn btn-success w-100">Message</button>
+            <button class="btn btn-success w-100" (click)="selectTab(3)">Message</button>
           </div>
         </div>
       </div>
     </div>
     <div class="col-sm-8">
       <div class="tab-panel">
-        <tabset class="member-tabset">
-          <tab heading="About {{user.knownAs}}">
+        <tabset class="member-tabset" id="memberTabs" #memberTabs>
+          <tab heading="About {{user?.knownAs}}">
             <h4>Description</h4>
-            <p>{{user.introduction}}</p>
+            <p>{{user?.introduction}}</p>
             <h4>Looking For</h4>
-            <p>{{user.lookingFor}}</p>
+            <p>{{user?.lookingFor}}</p>
           </tab>
           <tab heading="Interests">
             <h4>Interests</h4>
-            <p>{{user.interests}}</p>
+            <p>{{user?.interests}}</p>
           </tab>
           <tab heading="Photos">
             <h4>Photos</h4>
-            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages" *ngIf="user"></ngx-gallery>
           </tab>
           <tab heading="Messages">
             <h4>Messages</h4>
-            <p>TODO: Messages will go here</p>
+            <app-member-messages [user]="user" *ngIf="user"></app-member-messages>
           </tab>
         </tabset>
       </div>

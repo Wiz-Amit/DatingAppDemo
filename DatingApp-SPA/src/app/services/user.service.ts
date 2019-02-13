@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 import { PaginatedResult } from '../models/pagination';
 import { map } from 'rxjs/operators';
+import { Message } from '../models/Message';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -78,5 +79,45 @@ export class UserService {
 
   sendLike(userId: number, recipientId: number) {
     return this.http.post(this.baseUrl + "users/" + userId + "/like/" + recipientId, {});
+  }
+
+  getMessages(userId: number, page?, itemsPerPage?, messageContainer?) {
+    const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
+
+    let params = new HttpParams();
+
+    if(page != null && itemsPerPage != null) {
+      params = params.append("pageNumber", page);
+      params = params.append("pageSize", itemsPerPage);
+      params = params.append("messageContainer", messageContainer);
+    }
+
+    return this.http.get<Message[]>(this.baseUrl + "users/" + userId + "/messages",
+      {observe: "response", params}).pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          if(response.headers.get("Pagination") !== null)
+            paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
+
+          return paginatedResult;
+        })
+      )
+  }
+
+  getMessageThread(senderId: number, recipientId: number) {
+    return this.http.get(this.baseUrl + "users/" + senderId + "/messages/thread/" + recipientId);
+  }
+
+  sendMessage(recipientId: number, message: Message) {
+    return this.http.post(this.baseUrl + "users/" + recipientId + "/messages", message);
+  }
+
+  deleteMessage(userId: number, messageId: number) {
+    return this.http.post(this.baseUrl + "users/" + userId + "/messages/" + messageId, {});
+  }
+
+  markMessageAsRead(userId: number, messageId: number) {
+    this.http.post(this.baseUrl + "users/" + userId + "/messages/" + messageId + "/read", {})
+      .subscribe();
   }
 }
