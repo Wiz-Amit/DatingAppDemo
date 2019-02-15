@@ -4,6 +4,9 @@ import { UserService } from 'src/app/services/user.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { User } from 'src/app/models/user';
 import { Message } from 'src/app/models/Message';
+import { tap } from 'rxjs/operators';
+// import { SignalR, IConnectionOptions } from 'ng2-signalr';
+import * as signalR from "@aspnet/signalr";
 
 @Component({
   selector: 'app-member-messages',
@@ -23,10 +26,46 @@ export class MemberMessagesComponent implements OnInit {
 
   ngOnInit() {
     this.loadMessageThread();
+    this.connectToMessageHub();
+  }
+    
+  connectToMessageHub() {
+    //ng2-signalr
+    // let options: IConnectionOptions = { hubName: 'MessageHub', qs: { user: this.user.username } };
+    // this.signalR.connect(options).then((c) => {
+    //   console.log("Connected to  MessageHub: ", c);
+    // }); 
+
+    //signalr
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl("http://localhost:5000/messagehub")
+      .build();
+
+    connection
+      .start()
+      .then(() => console.log('Connected to messageHub'))
+      .catch(err => console.log(err));
+
+    connection.on("newMessage", (message: Message) => {
+      this.newMessage(message);
+    })
+  }
+
+  newMessage(message: Message) {
+    console.log("New message ", message);
   }
 
   loadMessageThread() {
     this.userService.getMessageThread(this.authService.getId(), this.user.id)
+      .pipe(
+        tap((messages: Message[]) => {
+          const userId = +this.authService.getId();
+          messages.forEach(message => {
+            if(message.recipientId === userId && message.isRead == false)
+              this.userService.markMessageAsRead(userId, message.id);
+          });
+        })
+      )
       .subscribe(
         (messages: Message[]) => {
           this.messages = messages.slice().reverse();

@@ -8,6 +8,8 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {TimeAgoPipe} from 'time-ago-pipe';
+import { SignalRModule } from 'ng2-signalr';
+import { SignalRConfiguration } from 'ng2-signalr';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -32,6 +34,20 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
 export function tokenGetter() {
    return localStorage.getItem("token");
 }
+
+export function createConfig(): SignalRConfiguration {
+   const c = new SignalRConfiguration();
+   c.hubName = '';
+   c.qs = { user: '' };
+   c.url = 'http://localhost:5000';
+   c.logging = true;
+   
+   // >= v5.0.0
+   c.executeEventsInZone = true; // optional, default is true
+   c.executeErrorsInZone = false; // optional, default is false
+   c.executeStatusChangeInZone = true; // optional, default is true
+   return c;
+ }
 
 @NgModule({
    declarations: [
@@ -62,6 +78,7 @@ export function tokenGetter() {
       FileUploadModule,
       ReactiveFormsModule,
       BsDatepickerModule.forRoot(), 
+      SignalRModule.forRoot(createConfig),
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,
