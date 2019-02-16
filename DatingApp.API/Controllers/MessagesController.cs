@@ -82,8 +82,8 @@ namespace DatingApp.API.Controllers
 
                 try
                 {
-                    await _messageHub.Clients.All.SendAsync("newMessage", messageToReturn);
-                    await _messageHub.Clients.User(messageForCreation.RecipientId.ToString()).SendAsync("newMessage", messageToReturn);
+                    await _messageHub.Clients.User(messageToReturn.SenderId.ToString()).SendAsync("newMessage", messageToReturn);
+                    await _messageHub.Clients.User(messageToReturn.RecipientId.ToString()).SendAsync("newMessage", messageToReturn);
                 }
                 catch (Exception e)
                 {
@@ -144,7 +144,20 @@ namespace DatingApp.API.Controllers
                 message.DataRead = DateTime.Now;
             }
 
-            await _repo.SaveAll();
+            if(await _repo.SaveAll())
+            {
+                var messageToReturn = _mapper.Map<MessageToReturnDto>(message);
+
+                try
+                {
+                    await _messageHub.Clients.User(messageToReturn.SenderId.ToString()).SendAsync("newMessage", messageToReturn);
+                    await _messageHub.Clients.User(messageToReturn.RecipientId.ToString()).SendAsync("newMessage", messageToReturn);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.ToString());
+                } 
+            }
 
             return NoContent();
         }

@@ -85,12 +85,13 @@ var AppComponent = /** @class */ (function () {
 /*!*******************************!*\
   !*** ./src/app/app.module.ts ***!
   \*******************************/
-/*! exports provided: tokenGetter, AppModule */
+/*! exports provided: tokenGetter, createConfig, AppModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tokenGetter", function() { return tokenGetter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createConfig", function() { return createConfig; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
@@ -104,25 +105,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ng2_file_upload__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(ng2_file_upload__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ "./node_modules/ngx-bootstrap/datepicker/index.js");
 /* harmony import */ var time_ago_pipe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! time-ago-pipe */ "./node_modules/time-ago-pipe/esm5/time-ago-pipe.js");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _nav_nav_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./nav/nav.component */ "./src/app/nav/nav.component.ts");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
-/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
-/* harmony import */ var _register_register_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./register/register.component */ "./src/app/register/register.component.ts");
-/* harmony import */ var _services_error_interceptor__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./services/error.interceptor */ "./src/app/services/error.interceptor.ts");
-/* harmony import */ var _services_alertify_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./services/alertify.service */ "./src/app/services/alertify.service.ts");
-/* harmony import */ var _members_member_list_member_list_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./members/member-list/member-list.component */ "./src/app/members/member-list/member-list.component.ts");
-/* harmony import */ var _lists_lists_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./lists/lists.component */ "./src/app/lists/lists.component.ts");
-/* harmony import */ var _messages_messages_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./messages/messages.component */ "./src/app/messages/messages.component.ts");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./routes */ "./src/app/routes.ts");
-/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./guards/auth.guard */ "./src/app/guards/auth.guard.ts");
-/* harmony import */ var _members_member_card_member_card_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./members/member-card/member-card.component */ "./src/app/members/member-card/member-card.component.ts");
-/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
-/* harmony import */ var _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./members/member-detail/member-detail.component */ "./src/app/members/member-detail/member-detail.component.ts");
-/* harmony import */ var _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./members/member-edit/member-edit.component */ "./src/app/members/member-edit/member-edit.component.ts");
-/* harmony import */ var _guards_prevent_unsaved_changes_guard__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./guards/prevent-unsaved-changes.guard */ "./src/app/guards/prevent-unsaved-changes.guard.ts");
-/* harmony import */ var _members_photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./members/photo-editor/photo-editor.component */ "./src/app/members/photo-editor/photo-editor.component.ts");
-/* harmony import */ var _members_member_messages_member_messages_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./members/member-messages/member-messages.component */ "./src/app/members/member-messages/member-messages.component.ts");
+/* harmony import */ var ng2_signalr__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng2-signalr */ "./node_modules/ng2-signalr/index.js");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _nav_nav_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./nav/nav.component */ "./src/app/nav/nav.component.ts");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
+/* harmony import */ var _register_register_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./register/register.component */ "./src/app/register/register.component.ts");
+/* harmony import */ var _services_error_interceptor__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./services/error.interceptor */ "./src/app/services/error.interceptor.ts");
+/* harmony import */ var _services_alertify_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./services/alertify.service */ "./src/app/services/alertify.service.ts");
+/* harmony import */ var _members_member_list_member_list_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./members/member-list/member-list.component */ "./src/app/members/member-list/member-list.component.ts");
+/* harmony import */ var _lists_lists_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./lists/lists.component */ "./src/app/lists/lists.component.ts");
+/* harmony import */ var _messages_messages_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./messages/messages.component */ "./src/app/messages/messages.component.ts");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./routes */ "./src/app/routes.ts");
+/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./guards/auth.guard */ "./src/app/guards/auth.guard.ts");
+/* harmony import */ var _members_member_card_member_card_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./members/member-card/member-card.component */ "./src/app/members/member-card/member-card.component.ts");
+/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
+/* harmony import */ var _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./members/member-detail/member-detail.component */ "./src/app/members/member-detail/member-detail.component.ts");
+/* harmony import */ var _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./members/member-edit/member-edit.component */ "./src/app/members/member-edit/member-edit.component.ts");
+/* harmony import */ var _guards_prevent_unsaved_changes_guard__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./guards/prevent-unsaved-changes.guard */ "./src/app/guards/prevent-unsaved-changes.guard.ts");
+/* harmony import */ var _members_photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./members/photo-editor/photo-editor.component */ "./src/app/members/photo-editor/photo-editor.component.ts");
+/* harmony import */ var _members_member_messages_member_messages_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./members/member-messages/member-messages.component */ "./src/app/members/member-messages/member-messages.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -158,8 +160,22 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
 function tokenGetter() {
     return localStorage.getItem("token");
+}
+function createConfig() {
+    var c = new ng2_signalr__WEBPACK_IMPORTED_MODULE_10__["SignalRConfiguration"]();
+    c.hubName = '';
+    c.qs = { user: '' };
+    c.url = 'http://localhost:5000';
+    c.logging = true;
+    // >= v5.0.0
+    c.executeEventsInZone = true; // optional, default is true
+    c.executeErrorsInZone = false; // optional, default is false
+    c.executeStatusChangeInZone = true; // optional, default is true
+    return c;
 }
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -167,18 +183,18 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_10__["AppComponent"],
-                _nav_nav_component__WEBPACK_IMPORTED_MODULE_11__["NavComponent"],
-                _home_home_component__WEBPACK_IMPORTED_MODULE_13__["HomeComponent"],
-                _register_register_component__WEBPACK_IMPORTED_MODULE_14__["RegisterComponent"],
-                _members_member_list_member_list_component__WEBPACK_IMPORTED_MODULE_17__["MemberListComponent"],
-                _lists_lists_component__WEBPACK_IMPORTED_MODULE_18__["ListsComponent"],
-                _messages_messages_component__WEBPACK_IMPORTED_MODULE_19__["MessagesComponent"],
-                _members_member_card_member_card_component__WEBPACK_IMPORTED_MODULE_22__["MemberCardComponent"],
-                _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_24__["MemberDetailComponent"],
-                _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_25__["MemberEditComponent"],
-                _members_photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_27__["PhotoEditorComponent"],
-                _members_member_messages_member_messages_component__WEBPACK_IMPORTED_MODULE_28__["MemberMessagesComponent"],
+                _app_component__WEBPACK_IMPORTED_MODULE_11__["AppComponent"],
+                _nav_nav_component__WEBPACK_IMPORTED_MODULE_12__["NavComponent"],
+                _home_home_component__WEBPACK_IMPORTED_MODULE_14__["HomeComponent"],
+                _register_register_component__WEBPACK_IMPORTED_MODULE_15__["RegisterComponent"],
+                _members_member_list_member_list_component__WEBPACK_IMPORTED_MODULE_18__["MemberListComponent"],
+                _lists_lists_component__WEBPACK_IMPORTED_MODULE_19__["ListsComponent"],
+                _messages_messages_component__WEBPACK_IMPORTED_MODULE_20__["MessagesComponent"],
+                _members_member_card_member_card_component__WEBPACK_IMPORTED_MODULE_23__["MemberCardComponent"],
+                _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_25__["MemberDetailComponent"],
+                _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_26__["MemberEditComponent"],
+                _members_photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_28__["PhotoEditorComponent"],
+                _members_member_messages_member_messages_component__WEBPACK_IMPORTED_MODULE_29__["MemberMessagesComponent"],
                 time_ago_pipe__WEBPACK_IMPORTED_MODULE_9__["TimeAgoPipe"],
             ],
             imports: [
@@ -190,11 +206,12 @@ var AppModule = /** @class */ (function () {
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_4__["PaginationModule"].forRoot(),
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_4__["BsDropdownModule"].forRoot(),
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_4__["TabsModule"].forRoot(),
-                _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"].forRoot(_routes__WEBPACK_IMPORTED_MODULE_20__["appRoutes"]),
+                _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"].forRoot(_routes__WEBPACK_IMPORTED_MODULE_21__["appRoutes"]),
                 ng2_file_upload__WEBPACK_IMPORTED_MODULE_7__["FileUploadModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
                 ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__["BsDatepickerModule"].forRoot(),
-                _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_23__["JwtModule"].forRoot({
+                ng2_signalr__WEBPACK_IMPORTED_MODULE_10__["SignalRModule"].forRoot(createConfig),
+                _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_24__["JwtModule"].forRoot({
                     config: {
                         tokenGetter: tokenGetter,
                         whitelistedDomains: ['localhost:5000'],
@@ -203,14 +220,14 @@ var AppModule = /** @class */ (function () {
                 })
             ],
             providers: [
-                _services_auth_service__WEBPACK_IMPORTED_MODULE_12__["AuthService"],
-                _services_alertify_service__WEBPACK_IMPORTED_MODULE_16__["AlertifyService"],
-                _services_error_interceptor__WEBPACK_IMPORTED_MODULE_15__["ErrorInterceptorProvider"],
-                _guards_auth_guard__WEBPACK_IMPORTED_MODULE_21__["AuthGuard"],
-                _guards_prevent_unsaved_changes_guard__WEBPACK_IMPORTED_MODULE_26__["PreventUnsavedChanges"]
+                _services_auth_service__WEBPACK_IMPORTED_MODULE_13__["AuthService"],
+                _services_alertify_service__WEBPACK_IMPORTED_MODULE_17__["AlertifyService"],
+                _services_error_interceptor__WEBPACK_IMPORTED_MODULE_16__["ErrorInterceptorProvider"],
+                _guards_auth_guard__WEBPACK_IMPORTED_MODULE_22__["AuthGuard"],
+                _guards_prevent_unsaved_changes_guard__WEBPACK_IMPORTED_MODULE_27__["PreventUnsavedChanges"]
             ],
             bootstrap: [
-                _app_component__WEBPACK_IMPORTED_MODULE_10__["AppComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_11__["AppComponent"]
             ]
         })
     ], AppModule);
@@ -569,7 +586,7 @@ var MemberCardComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-thumbnail {\r\n    margin: 25px;\r\n    width: 85%;\r\n    height: 85%;\r\n}\r\n\r\n.card-body {\r\n    padding: 0 25px;\r\n}\r\n\r\n.card-footer {\r\n    padding: 10px 15px;\r\n    background-color: #fff;\r\n    border-top: none;\r\n}\r\n\r\n"
+module.exports = ".img-thumbnail {\r\n    margin: 2vw auto;\r\n    width: 85%;\r\n    height: 85%;\r\n}\r\n\r\n.card-body {\r\n    padding: 0 25px;\r\n}\r\n\r\n.card-footer {\r\n    padding: 10px 15px;\r\n    background-color: #fff;\r\n    border-top: none;\r\n}\r\n\r\n"
 
 /***/ }),
 
@@ -580,7 +597,7 @@ module.exports = ".img-thumbnail {\r\n    margin: 25px;\r\n    width: 85%;\r\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container mt-4\">\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <div class=\"card\" *ngIf=\"user\">\n        <img src=\"{{user.photoUrl || '../../../assets/user.png'}}\" alt=\"{{user?.knowAs}}\" class=\"card-img-top img-thumbnail\">\n        <div class=\"card-body\">\n            <h4>{{user?.knownAs}}</h4>\n          <div>\n            <strong>Location:</strong> {{user.city}}\n          </div>\n          <div>\n            <strong>Age:</strong> {{user.age}}\n          </div>\n          <div>\n            <strong>Last Active:</strong> {{user.lastActive | timeAgo}}\n          </div>\n          <div>\n            <strong>Member Since:</strong> {{user.created | date}}\n          </div>\n        </div>\n        <div class=\"card-footer\">\n          <div class=\"btn-group d-flex\">\n            <button class=\"btn btn-primary w-100\">Like</button>\n            <button class=\"btn btn-success w-100\" (click)=\"selectTab(3)\">Message</button>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-sm-8\">\n      <div class=\"tab-panel\">\n        <tabset class=\"member-tabset\" id=\"memberTabs\" #memberTabs>\n          <tab heading=\"About {{user?.knownAs}}\">\n            <h4>Description</h4>\n            <p>{{user?.introduction}}</p>\n            <h4>Looking For</h4>\n            <p>{{user?.lokingFor}}</p>\n          </tab>\n          <tab heading=\"Interests\">\n            <h4>Interests</h4>\n            <p>{{user?.interests}}</p>\n          </tab>\n          <tab heading=\"Photos\">\n            <h4>Photos</h4>\n            <ngx-gallery [options]=\"galleryOptions\" [images]=\"galleryImages\" *ngIf=\"user\"></ngx-gallery>\n          </tab>\n          <tab heading=\"Messages\">\n            <h4>Messages</h4>\n            <app-member-messages [user]=\"user\" *ngIf=\"user\"></app-member-messages>\n          </tab>\n        </tabset>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container mt-4\">\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <div class=\"card\" *ngIf=\"user\">\n        <img src=\"{{user.photoUrl || '../../../assets/user.png'}}\" alt=\"{{user?.knowAs}}\" class=\"card-img-top img-thumbnail\">\n        <div class=\"card-body\">\n            <h4>{{user?.knownAs}}</h4>\n          <div>\n            <strong>Location:</strong> {{user.city}}\n          </div>\n          <div>\n            <strong>Age:</strong> {{user.age}}\n          </div>\n          <div>\n            <strong>Last Active:</strong> {{user.lastActive | timeAgo}}\n          </div>\n          <div>\n            <strong>Member Since:</strong> {{user.created | date}}\n          </div>\n        </div>\n        <div class=\"card-footer\">\n          <div class=\"btn-group d-flex\">\n            <button class=\"btn btn-primary w-100\">Like</button>\n            <button *ngIf=\"!memberTabs.tabs[3].active\" class=\"btn btn-success w-100\" (click)=\"selectTab(3)\">Message</button>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-sm-8\">\n      <div class=\"tab-panel\">\n        <tabset class=\"member-tabset\" id=\"memberTabs\" #memberTabs>\n          <tab heading=\"About {{user?.knownAs}}\">\n            <h4>Description</h4>\n            <p>{{user?.introduction}}</p>\n            <h4>Looking For</h4>\n            <p>{{user?.lokingFor}}</p>\n          </tab>\n          <tab heading=\"Interests\">\n            <h4>Interests</h4>\n            <p>{{user?.interests}}</p>\n          </tab>\n          <tab heading=\"Photos\">\n            <h4>Photos</h4>\n            <ngx-gallery [options]=\"galleryOptions\" [images]=\"galleryImages\" *ngIf=\"user\"></ngx-gallery>\n          </tab>\n          <tab heading=\"Messages\">\n            <h4>Messages</h4>\n            <app-member-messages [user]=\"user\" *ngIf=\"user\"></app-member-messages>\n          </tab>\n        </tabset>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -809,7 +826,7 @@ var MemberEditComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".btn, .form-group {\r\n    margin-top: 10px;\r\n}"
 
 /***/ }),
 
@@ -820,7 +837,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"text-center mt-3\" *ngIf=\"pagination\">\n  <h2>Your matches: {{pagination.totalItems}} found</h2>\n</div>\n\n<div class=\"container mt-5\">\n  <form class=\"form-inline\" #filters=\"ngForm\" (ngSubmit)=\"loadUsers()\" \n    (change)=\"loadUsers()\" novalidate>\n    <div class=\"form-group\">\n      <label for=\"minAge\">Age From</label>\n      <input type=\"number\" class=\"form-control ml-1\" style=\"width: 70px\"\n        id=\"minAge\" name=\"minAge\" [(ngModel)]=\"userParams.minAge\">\n    </div>\n  \n    <div class=\"form-group px-2\">\n      <label for=\"maxAge\">Age To</label>\n      <input type=\"number\" class=\"form-control ml-1\" style=\"width: 70px\"\n        id=\"maxAge\" name=\"maxAge\"  [(ngModel)]=\"userParams.maxAge\">\n    </div>\n  \n    <div class=\"form-group px-2\">\n      <label for=\"gender\">Show: </label>\n      <select class=\"form-control ml-1\" style=\"width: 130px\"\n        id=\"gender\" name=\"gender\"  [(ngModel)]=\"userParams.gender\">\n        <option *ngFor=\"let gender of genderList\" value={{gender.value}}>\n          {{gender.display}}\n        </option>\n      </select>\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\" style=\"margin-left:10px\">Apply Filters</button>\n    <button type=\"button\" class=\"btn btn-info\" style=\"margin-left:10px\"\n      (click)=\"resetFilters()\">Reset Filter</button>\n    <div class=\"col\">\n      <div class=\"btn-group float-right\">\n        <button type=\"button\" name=\"orderBy\" class=\"btn btn-primary\"\n          [(ngModel)]=\"userParams.orderBy\" (click)=\"loadUsers()\" btnRadio=\"lastActive\"\n        >Last Active</button>\n        <button type=\"button\" name=\"orderBy\" class=\"btn btn-primary\"\n          [(ngModel)]=\"userParams.orderBy\" (click)=\"loadUsers()\" btnRadio=\"created\"\n        >Newest Members</button>\n      </div>\n    </div>\n  </form>\n  <br>\n\n  <div class=\"row\">\n    <div *ngFor=\"let user of users\" class=\"col-lg-2 col-md-3 col-sm-6\">\n      <app-member-card [user]=\"user\"></app-member-card>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"pagination\" class=\"d-flex justify-content-center\">\n  <pagination [boundaryLinks]=\"true\"\n    [totalItems]=\"pagination.totalItems\"\n    [itemsPerPage]=\"pagination.itemsPerPage\"\n    [(ngModel)]=\"pagination.currentPage\"\n    (pageChanged)=\"pageChanged($event)\"\n    previousText=\"&lsaquo;\" nextText=\"&rsaquo;\" firstText=\"&laquo;\" lastText=\"&raquo;\">\n  </pagination>\n</div>"
+module.exports = "<div class=\"text-center mt-3\" *ngIf=\"pagination\">\n  <h2>Your matches: {{pagination.totalItems}} found</h2>\n</div>\n\n<div class=\"container mt-5\">\n  <form class=\"form-inline\" #filters=\"ngForm\" (ngSubmit)=\"loadUsers()\" \n    (change)=\"loadUsers()\" novalidate>\n    <div class=\"form-group\">\n      <label for=\"minAge\">Age From</label>\n      <input type=\"number\" class=\"form-control ml-1\" style=\"width: 70px\"\n        id=\"minAge\" name=\"minAge\" [(ngModel)]=\"userParams.minAge\">\n    </div>\n  \n    <div class=\"form-group px-2\">\n      <label for=\"maxAge\">Age To</label>\n      <input type=\"number\" class=\"form-control ml-1\" style=\"width: 70px\"\n        id=\"maxAge\" name=\"maxAge\"  [(ngModel)]=\"userParams.maxAge\">\n    </div>\n  \n    <div class=\"form-group px-2\">\n      <label for=\"gender\">Show: </label>\n      <select class=\"form-control ml-1\" style=\"width: 130px\"\n        id=\"gender\" name=\"gender\"  [(ngModel)]=\"userParams.gender\">\n        <option *ngFor=\"let gender of genderList\" value={{gender.value}}>\n          {{gender.display}}\n        </option>\n      </select>\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\" style=\"margin-left:10px\">Apply Filters</button>\n    <button type=\"button\" class=\"btn btn-info\" style=\"margin-left:10px\"\n      (click)=\"resetFilters()\">Reset Filter</button>\n    <div class=\"col\">\n      <div class=\"btn-group float-right\">\n        <button type=\"button\" name=\"orderBy\" class=\"btn btn-primary\"\n          [(ngModel)]=\"userParams.orderBy\" (click)=\"loadUsers()\" btnRadio=\"lastActive\"\n        >Last Active</button>\n        <button type=\"button\" name=\"orderBy\" class=\"btn btn-primary\"\n          [(ngModel)]=\"userParams.orderBy\" (click)=\"loadUsers()\" btnRadio=\"created\"\n        >Newest</button>\n      </div>\n    </div>\n  </form>\n  <br>\n\n  <div class=\"row\">\n    <div *ngFor=\"let user of users\" class=\"col-lg-2 col-md-3 col-sm-6\">\n      <app-member-card [user]=\"user\"></app-member-card>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"pagination\" class=\"d-flex justify-content-center\">\n  <pagination [boundaryLinks]=\"true\"\n    [totalItems]=\"pagination.totalItems\"\n    [itemsPerPage]=\"pagination.itemsPerPage\"\n    [(ngModel)]=\"pagination.currentPage\"\n    (pageChanged)=\"pageChanged($event)\"\n    previousText=\"&lsaquo;\" nextText=\"&rsaquo;\" firstText=\"&laquo;\" lastText=\"&raquo;\">\n  </pagination>\n</div>"
 
 /***/ }),
 
@@ -870,6 +887,10 @@ var MemberListComponent = /** @class */ (function () {
         }, function (error) {
             _this.alertify.error(error);
         });
+    };
+    MemberListComponent.prototype.pageChanged = function (event) {
+        this.pageNumber = event.page;
+        this.loadUsers();
     };
     MemberListComponent.prototype.resetFilters = function () {
         this.userParams.gender = this.user.gender == "male" ? "female" : "male";
@@ -930,6 +951,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
 /* harmony import */ var src_app_services_alertify_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/alertify.service */ "./src/app/services/alertify.service.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _aspnet_signalr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @aspnet/signalr */ "./node_modules/@aspnet/signalr/dist/esm/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -944,6 +966,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+// import { SignalR, IConnectionOptions } from 'ng2-signalr';
+
 var MemberMessagesComponent = /** @class */ (function () {
     function MemberMessagesComponent(authService, userService, alertify) {
         this.authService = authService;
@@ -953,6 +977,45 @@ var MemberMessagesComponent = /** @class */ (function () {
     }
     MemberMessagesComponent.prototype.ngOnInit = function () {
         this.loadMessageThread();
+        this.connectToMessageHub();
+    };
+    MemberMessagesComponent.prototype.ngOnDestroy = function () {
+        this.connection.stop();
+    };
+    MemberMessagesComponent.prototype.connectToMessageHub = function () {
+        var _this = this;
+        //signalr
+        this.connection = new _aspnet_signalr__WEBPACK_IMPORTED_MODULE_5__["HubConnectionBuilder"]()
+            .withUrl("http://localhost:5000/messagehub", { accessTokenFactory: function () { return _this.getAccessToken(); } })
+            .build();
+        this.connection
+            .start()
+            .then(function () { return console.log('Connected to messageHub'); })
+            .catch(function (err) { return console.log(err); });
+        this.connection.on("newMessage", function (message) {
+            _this.newMessage(message);
+        });
+    };
+    MemberMessagesComponent.prototype.getAccessToken = function () {
+        return localStorage.getItem("token");
+    };
+    MemberMessagesComponent.prototype.newMessage = function (message) {
+        var userId = +this.authService.getId();
+        //check if the message already exists
+        var isNew = true;
+        this.messages.forEach(function (m) {
+            if (m.id == message.id) {
+                m.isRead = true;
+                m.dataRead = message.dataRead;
+                isNew = false;
+            }
+        });
+        //replace if exists else push new message
+        if (isNew)
+            this.messages.push(message);
+        if (message.recipientId === userId && message.isRead == false)
+            this.userService.markMessageAsRead(userId, message.id);
+        this.scrollToBottom();
     };
     MemberMessagesComponent.prototype.loadMessageThread = function () {
         var _this = this;
@@ -960,7 +1023,7 @@ var MemberMessagesComponent = /** @class */ (function () {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (messages) {
             var userId = +_this.authService.getId();
             messages.forEach(function (message) {
-                if (message.recipientId === userId)
+                if (message.recipientId === userId && message.isRead == false)
                     _this.userService.markMessageAsRead(userId, message.id);
             });
         }))
@@ -977,12 +1040,10 @@ var MemberMessagesComponent = /** @class */ (function () {
         this.message.recipientId = this.user.id;
         this.userService.sendMessage(this.authService.getId(), this.message)
             .subscribe(function (message) {
-            _this.messages.push(message);
+            // this.messages.push(message);
             _this.message.content = "";
         }, function (error) {
             _this.alertify.error(error);
-        }, function () {
-            _this.scrollToBottom();
         });
     };
     MemberMessagesComponent.prototype.scrollToBottom = function () {

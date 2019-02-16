@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -13,10 +13,11 @@ import * as signalR from "@aspnet/signalr";
   templateUrl: './member-messages.component.html',
   styleUrls: ['./member-messages.component.css']
 })
-export class MemberMessagesComponent implements OnInit {
+export class MemberMessagesComponent implements OnInit, OnDestroy {
   @Input() user: User;
   messages: Message[];
   message: any = {};
+  connection: signalR.HubConnection;
 
   constructor(
     private authService: AuthService,
@@ -28,38 +29,51 @@ export class MemberMessagesComponent implements OnInit {
     this.loadMessageThread();
     this.connectToMessageHub();
   }
+
+  ngOnDestroy(): void {
+    this.connection.stop();
+  }
     
   connectToMessageHub() {
-    //ng2-signalr
-    // let options: IConnectionOptions = { hubName: 'MessageHub', qs: { user: this.user.username } };
-    // this.signalR.connect(options).then((c) => {
-    //   console.log("Connected to  MessageHub: ", c);
-    // }); 
-
     //signalr
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5000/messagehub")
+    this.connection = new signalR.HubConnectionBuilder()
+      .withUrl("http://localhost:5000/messagehub", { accessTokenFactory: () => this.getAccessToken() })
       .build();
 
-    connection
+    this.connection
       .start()
       .then(() => console.log('Connected to messageHub'))
       .catch(err => console.log(err));
 
-    connection.on("newMessage", (message: Message) => {
+    this.connection.on("newMessage", (message: Message) => {
       this.newMessage(message);
-    })
+    });
+  }
+
+  getAccessToken() {
+    return localStorage.getItem("token");
   }
 
   newMessage(message: Message) {
     var userId = +this.authService.getId();
-    if(message.recipientId == this.user.id && message.senderId == userId
-      || message.senderId == this.user.id && message.recipientId == userId) {
-        this.messages.push(message);
-        if(message.recipientId === userId && message.isRead == false)
-          this.userService.markMessageAsRead(userId, message.id);
+
+    //check if the message already exists
+    var isNew = true;
+    this.messages.forEach(m => {
+      if(m.id == message.id) {
+        m.isRead = true;
+        m.dataRead = message.dataRead;
+        isNew = false;
       }
-    console.log("New message: ", message);
+    });
+
+    //replace if exists else push new message
+    if(isNew)
+      this.messages.push(message);
+
+      if(message.recipientId === userId && message.isRead == false)
+        this.userService.markMessageAsRead(userId, message.id);
+
     this.scrollToBottom();
   }
 

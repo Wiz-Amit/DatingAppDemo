@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,12 +58,34 @@ namespace DaingApp.API
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
+
+                    // We have to hook the OnMessageReceived event in order to
+                    // allow the JWT authentication handler to read the access
+                    // token from the query string when a WebSocket or 
+                    // Server-Sent Events request comes in.
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+
+                            // If the request is for our hub...
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                                (path.StartsWithSegments("/messagehub")))
+                            {
+                                // Read the token out of the query string
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddScoped<LogUserActivity>();
-            // services.AddScoped<MessageHub>();
             services.AddSignalR();
+            // services.AddSingleton<IUserIdProvider, UserIdProvider>();
         }
 
          public void ConfigureDevelopmentServices(IServiceCollection services)
@@ -92,12 +115,35 @@ namespace DaingApp.API
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
+
+                    // We have to hook the OnMessageReceived event in order to
+                    // allow the JWT authentication handler to read the access
+                    // token from the query string when a WebSocket or 
+                    // Server-Sent Events request comes in.
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+
+                            // If the request is for our hub...
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                                (path.StartsWithSegments("/messagehub")))
+                            {
+                                // Read the token out of the query string
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<MessageHub>();
             services.AddSignalR();
+            // services.AddSingleton<IUserIdProvider, UserIdProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -130,11 +176,11 @@ namespace DaingApp.API
             seeder.SeedUser();
             // app.UseCors("CorsPolicy");
             app.UseCors(c => c.AllowAnyOrigin().AllowCredentials().AllowAnyHeader().AllowAnyMethod());
+            app.UseAuthentication();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<MessageHub>("/messagehub");
             });
-            app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc(routes => {
