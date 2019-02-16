@@ -8,20 +8,20 @@ namespace DatingApp.API.Models
         public User(int id, string username, string gender, DateTime dateOfBirth, string knownAs, DateTime created, DateTime lastActive, string introduction, string lookingFor, string interests, string city, string country) 
         {
             this.Id = id;
-                this.Username = username;
-                this.Gender = gender;
-                this.DateOfBirth = dateOfBirth;
-                this.KnownAs = knownAs;
-                this.Created = created;
-                this.LastActive = lastActive;
-                this.Introduction = introduction;
-                this.LookingFor = lookingFor;
-                this.Interests = interests;
-                this.City = city;
-                this.Country = country;
+            this.Username = username;
+            this.Gender = gender;
+            this.DateOfBirth = dateOfBirth;
+            this.KnownAs = knownAs;
+            this.Created = created;
+            this.LastActive = lastActive;
+            this.Introduction = introduction;
+            this.LookingFor = lookingFor;
+            this.Interests = interests;
+            this.City = city;
+            this.Country = country;
                
         }
-                public int Id { get; set; }
+        public int Id { get; set; }
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }

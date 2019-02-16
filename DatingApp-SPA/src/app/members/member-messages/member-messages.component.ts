@@ -52,7 +52,15 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   newMessage(message: Message) {
-    console.log("New message ", message);
+    var userId = +this.authService.getId();
+    if(message.recipientId == this.user.id && message.senderId == userId
+      || message.senderId == this.user.id && message.recipientId == userId) {
+        this.messages.push(message);
+        if(message.recipientId === userId && message.isRead == false)
+          this.userService.markMessageAsRead(userId, message.id);
+      }
+    console.log("New message: ", message);
+    this.scrollToBottom();
   }
 
   loadMessageThread() {
@@ -75,7 +83,6 @@ export class MemberMessagesComponent implements OnInit {
       },
       () => {
         this.scrollToBottom();
-
       })
   }
 
@@ -84,14 +91,11 @@ export class MemberMessagesComponent implements OnInit {
     this.userService.sendMessage(this.authService.getId(), this.message)
       .subscribe(
         (message: Message) => {
-          this.messages.push(message);
+          // this.messages.push(message);
           this.message.content = "";
         },
         error => {
           this.alertify.error(error);
-        },
-        () => {
-          this.scrollToBottom();
         })
   }
 

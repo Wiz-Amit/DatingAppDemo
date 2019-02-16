@@ -24,11 +24,8 @@ namespace DatingApp.API.Controllers
         private readonly IMapper _mapper;
         private readonly IHubContext<MessageHub> _messageHub;
 
-        // private IHubContext<MessageHub, IMessageHub> _messageHubContext;
-
         public MessagesController(IDatingRepository repo, IMapper mapper, IHubContext<MessageHub> messageHub)
         {
-            // _messageHubContext = messageHubContext;
             _mapper = mapper;
             _messageHub = messageHub;
             _repo = repo;
@@ -85,9 +82,8 @@ namespace DatingApp.API.Controllers
 
                 try
                 {
-                    // await _messageHub.PushNewMessage(messageToReturn);
                     await _messageHub.Clients.All.SendAsync("newMessage", messageToReturn);
-                    // await _messageHubContext.Clients.All.PushNewMessage(messageToReturn);
+                    await _messageHub.Clients.User(messageForCreation.RecipientId.ToString()).SendAsync("newMessage", messageToReturn);
                 }
                 catch (Exception e)
                 {
