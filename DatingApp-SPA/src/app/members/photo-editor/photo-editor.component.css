@@ -11,3 +11,24 @@ img.img-thumbnail {
 input[type=file] {
     color: transparent;
 }
+
+.notVerified {
+    position: relative;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.notVerified > img {
+    opacity: 0.5;
+}
+
+.notVerified::after {
+    position: absolute;
+    content: "Pending for approval";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: small;
+    text-shadow: 0px 0px 5px white;
+}

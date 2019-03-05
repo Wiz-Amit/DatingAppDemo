@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,7 +15,6 @@ using Microsoft.Extensions.Options;
 
 namespace DatingApp.API.Controllers
 {
-    [Authorize]
     [Route("api/users/{userId}/[controller]")]
     [ApiController]
     public class PhotosController : ControllerBase
@@ -58,7 +58,7 @@ namespace DatingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(userId);
+            var userFromRepo = await _repo.GetUser(userId, false);
             var file = photoForCreation.File;
             var uploadResult = new ImageUploadResult();
 
@@ -83,6 +83,7 @@ namespace DatingApp.API.Controllers
             var photo = _mapper.Map<Photo>(photoForCreation);
 
             if(!userFromRepo.Photos.Any(p => p.IsMain)) photo.IsMain = true;
+            photo.IsVerified = false;
 
             userFromRepo.Photos.Add(photo);
 
@@ -100,12 +101,15 @@ namespace DatingApp.API.Controllers
             if(userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             
-            var user = await _repo.GetUser(userId);
+            var user = await _repo.GetUser(userId, false);
 
             if(!user.Photos.Any(p => p.Id == id))
                 return Unauthorized();
 
             var photoFromRepo = await _repo.GetPhoto(id);
+
+            if(!photoFromRepo.IsVerified)
+                return BadRequest("This photo is pending for approval.");
 
             if(photoFromRepo.IsMain)
                 return BadRequest("This is already the main photo.");
@@ -125,7 +129,7 @@ namespace DatingApp.API.Controllers
             if(userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             
-            var user = await _repo.GetUser(userId);
+            var user = await _repo.GetUser(userId, true);
 
             if(!user.Photos.Any(p => p.Id == id))
                 return Unauthorized();
@@ -140,7 +144,7 @@ namespace DatingApp.API.Controllers
                 var result = _cloudinary.Destroy(deletionParams);
                 if(result.Result == "ok") _repo.Delete(photoFromRepo);
             }
-            else _repo.Delete(photoFromRepo);
+            else if(photoFromRepo.publicId == null) _repo.Delete(photoFromRepo);
 
             if(await _repo.SaveAll()) {
                 return Ok();

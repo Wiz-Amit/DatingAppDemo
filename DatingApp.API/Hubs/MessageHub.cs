@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace DatingApp.API.Hubs
 {
-    [Authorize]
     public class MessageHub : Hub
     {
+        
     }
 }

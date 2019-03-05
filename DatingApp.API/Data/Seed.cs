@@ -1,45 +1,57 @@
 using System.Collections.Generic;
 using System.Linq;
 using DatingApp.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
 namespace DatingApp.API.Data
 {
     public class Seed
     {
-        private readonly DataContext _context;
-        public Seed(DataContext context)
-        {
-            _context = context;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
+        public Seed(UserManager<User> userManager, RoleManager<Role> roleManager)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public void SeedUser() {
-            if(!_context.Users.Any())
+            if(!_userManager.Users.Any())
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);
 
-                //regiter users
-                foreach(var user in users) {
-                    byte[] passwordHash, passwordSalt;
-                    CreatePasswordHash("password", out passwordHash, out passwordSalt);
+                //create a list of roles
+                var roles = new List<Role>
+                {
+                    new Role { Name = "Member" },
+                    new Role { Name = "Admin" },
+                    new Role { Name = "Moderator" },
+                    new Role { Name = "VIP" }
+                };
 
-                    user.PasswordHash = passwordHash;
-                    user.PasswordSalt = passwordSalt;
-                    user.Username = user.Username.ToLower();
-
-                    _context.Users.AddAsync(user);
-                    _context.SaveChangesAsync();
+                //add roles to the database
+                foreach (var role in roles)
+                {
+                    _roleManager.CreateAsync(role).Wait();
                 }
-            }
-        }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using(var hmac = new System.Security.Cryptography.HMACSHA512()) {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                //regiter users with role
+                foreach(var user in users) {
+                    _userManager.CreateAsync(user, "password").Wait();
+                    _userManager.AddToRoleAsync(user, "Member").Wait();
+                }
+
+                //create admin user
+                var adminUser = new User
+                {
+                    UserName = "Admin"
+                };
+
+                IdentityResult result = _userManager.CreateAsync(adminUser, "password").Result;
+                if(result != null) _userManager.AddToRolesAsync(adminUser, new [] {"Admin", "Moderator"}).Wait();
             }
         }
     }

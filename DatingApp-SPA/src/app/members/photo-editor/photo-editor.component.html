@@ -1,17 +1,19 @@
 <div class="row">
   <div class="col-sm-2" *ngFor="let photo of photos">
-    <img src="{{photo.url}}" class="img-thumbnail p-1 mt-2">
-    <div class="text-center">
-      <button class="btn btn-sm mr-1"
-        [ngClass]="photo.isMain ? 'btn-success active' : 'btn-secondary'"
-        (click)="setMainPhoto(photo)"
-        [disabled]="photo.isMain"
-      >Main</button>
-      <button class="btn btn-sm btn-danger"
-        (click)="deletePhoto(photo.id)"
-        [disabled]="photo.isMain">
-        <i class="fa fa-trash-o"></i>
-      </button>
+    <div [ngClass]="photo.isVerified ? 'verified' : 'notVerified'">
+      <img src="{{photo.url}}" class="img-thumbnail p-1 mt-2">
+      <div class="text-center">
+        <button class="btn btn-sm mr-1"
+          [ngClass]="photo.isMain ? 'btn-success active' : 'btn-secondary'"
+          (click)="setMainPhoto(photo)"
+          [disabled]="photo.isMain || !photo.isVerified"
+        >Main</button>
+        <button class="btn btn-sm btn-danger"
+          (click)="deletePhoto(photo.id)"
+          [disabled]="photo.isMain">
+          <i class="fa fa-trash-o"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>

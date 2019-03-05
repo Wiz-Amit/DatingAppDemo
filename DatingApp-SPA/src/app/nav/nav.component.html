@@ -12,6 +12,9 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="[ '/messages' ]">Messages</a>
       </li>
+      <li *appHasRole="['Admin', 'Moderator']" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="[ '/admin' ]">Admin</a>
+      </li>
     </ul>
 
     <form #loginForm="ngForm" *ngIf="!loggedIn();else welcome" (ngSubmit)="login(loginForm.value)" class="form-inline my-2 my-lg-0">

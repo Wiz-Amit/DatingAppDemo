@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.SignalR;
 namespace DatingApp.API.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
-    [Authorize]
     [Route("api/users/{userId}/[controller]")]
     [ApiController]
     public class MessagesController : ControllerBase
@@ -62,14 +61,14 @@ namespace DatingApp.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int userId, MessageCreationDto messageForCreation)
         {
-            var sender = await _repo.GetUser(userId);
+            var sender = await _repo.GetUser(userId, false);
 
             if (sender.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             messageForCreation.SenderId = userId;
 
-            var recipient = await _repo.GetUser(messageForCreation.RecipientId);
+            var recipient = await _repo.GetUser(messageForCreation.RecipientId, false);
             if (recipient == null)
                 return BadRequest("User not found");
 
@@ -102,7 +101,7 @@ namespace DatingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            if (await _repo.GetUser(recipientId) == null)
+            if (await _repo.GetUser(recipientId, false) == null)
                 return BadRequest("User not found");
 
             var messagesFromRepo = await _repo.GetMessagesThread(userId, recipientId);
