@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/DatingApp-SPA/.vs/slnx.sqlite
+/DatingApp-SPA/.vs/slnx.sqlite-journal
+/DatingApp-SPA/.vs/DatingApp-SPA/v15/.suo
+/DatingApp-SPA/.vs/config/applicationhost.config
