@@ -36,6 +36,8 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { AdminService } from './services/admin.service';
 import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function tokenGetter() {
    return localStorage.getItem("token");
@@ -97,7 +99,8 @@ export function createConfig(): SignalRConfiguration {
             whitelistedDomains:['localhost:5000'],
             blacklistedRoutes: ["localhost:5000/api/auth"]
          }
-      })
+      }),
+      ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
    ],
    providers: [
       AuthService,

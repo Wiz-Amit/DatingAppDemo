@@ -23,7 +23,9 @@ export class RegisterComponent implements OnInit {
     private alertify: AlertifyService,
     private fb: FormBuilder,
     private router: Router
-  ) { }
+  ) {
+    if(this.authService.loggedIn()) this.router.navigate(["home"]);
+  }
 
   ngOnInit() {
     this.bsConfig = { containerClass: "theme-red" };
